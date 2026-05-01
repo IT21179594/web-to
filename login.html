@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Wanderlust</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .auth-container {
+            position: relative;
+            width: 100%;
+            max-width: 850px;
+            height: 550px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+        }
+
+        .auth-form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .auth-container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .auth-container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+            0%, 49.99% { opacity: 0; z-index: 1; }
+            50%, 100% { opacity: 1; z-index: 5; }
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .auth-container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: var(--white);
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+            display: flex;
+        }
+
+        .auth-container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .auth-container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .auth-container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        .auth-form h2 { color: var(--primary-color); margin-bottom: 20px; font-weight: 700; }
+        .auth-form input { background-color: var(--bg-light); border: none; padding: 15px; margin-bottom: 15px; width: 100%; border-radius: 8px; font-size: 0.95rem; }
+        .auth-form input:focus { outline: none; box-shadow: 0 0 0 2px var(--secondary-color); }
+        .ghost-btn { background: transparent; border: 2px solid var(--white); color: var(--white); }
+        
+        .social-container { display: flex; gap: 15px; margin: 20px 0; }
+        .social-container a { border: 1px solid #cbd5e1; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; color: var(--text-dark); transition: var(--transition); }
+        .social-container a:hover { color: var(--secondary-color); border-color: var(--secondary-color); transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            .auth-container { flex-direction: column; height: auto; max-width: 400px; }
+            .auth-form-container { position: relative; width: 100%; height: auto; opacity: 1; transform: none !important; z-index: 1 !important; display: none; }
+            .auth-form-container.active-mobile { display: flex; }
+            .overlay-container { display: none; }
+            .mobile-toggle { display: block; text-align: center; margin-top: 20px; color: var(--secondary-color); cursor: pointer; font-weight: 600; }
+        }
+        .mobile-toggle { display: none; }
+    </style>
+</head>
+<body style="background: var(--bg-light); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 20px;">
+
+    <!-- Home Button -->
+    <a href="index.html" style="position: absolute; top: 30px; left: 30px; color: var(--primary-color); font-weight: 600; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="auth-container" id="container">
+        
+        <!-- Sign Up Form -->
+        <div class="auth-form-container sign-up-container" id="signup-panel">
+            <form class="auth-form" onsubmit="simulateRegister(event)">
+                <h2>Create Account</h2>
+                <div class="social-container">
+                    <a href="#"><i class="fa-brands fa-google"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+                <span style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">or use your email for registration</span>
+                <input type="text" id="reg-name" placeholder="Full Name" required />
+                <input type="email" id="reg-email" placeholder="Email Address" required />
+                <input type="password" id="reg-password" placeholder="Password" required />
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign Up</button>
+                <div class="mobile-toggle" onclick="toggleMobile()">Already have an account? Sign In</div>
+            </form>
+        </div>
+        
+        <!-- Sign In Form -->
+        <div class="auth-form-container sign-in-container active-mobile" id="signin-panel">
+            <form class="auth-form" onsubmit="simulateLogin(event)">
+                <h2>Sign in</h2>
+                <div class="social-container">
+                    <a href="#"><i class="fa-brands fa-google"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+                <span style="color: #64748b; font-size: 0.9rem; margin-bottom: 15px;">or use your account</span>
+                <input type="email" id="log-email" placeholder="Email Address" required />
+                <input type="password" id="log-password" placeholder="Password" required />
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Sign In</button>
+                <div class="mobile-toggle" onclick="toggleMobile()">Don't have an account? Sign Up</div>
+            </form>
+        </div>
+        
+        <!-- Overlay for Animation (Desktop only) -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome Back!</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 30px;">To keep connected with us please login with your personal info</p>
+                    <button class="btn ghost-btn" id="signInBtn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Hello, Traveler!</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 30px;">Enter your personal details and start your journey with us</p>
+                    <button class="btn ghost-btn" id="signUpBtn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Desktop Animation Toggle
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInBtn = document.getElementById('signInBtn');
+        const container = document.getElementById('container');
+
+        signUpBtn.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInBtn.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        // Mobile Animation Toggle
+        function toggleMobile() {
+            const signup = document.getElementById('signup-panel');
+            const signin = document.getElementById('signin-panel');
+            if (signin.classList.contains('active-mobile')) {
+                signin.classList.remove('active-mobile');
+                signup.classList.add('active-mobile');
+            } else {
+                signup.classList.remove('active-mobile');
+                signin.classList.add('active-mobile');
+            }
+        }
+
+        // Authentication Logic using LocalStorage
+        function simulateRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            let users = JSON.parse(localStorage.getItem('mockUsers')) || [];
+            
+            if(users.find(u => u.email === email)) {
+                alert("Email already exists! Please Sign In.");
+                return;
+            }
+
+            users.push({ name, email, password, role: 'user' });
+            localStorage.setItem('mockUsers', JSON.stringify(users));
+            
+            // Auto login after register
+            localStorage.setItem('currentUser', JSON.stringify({ name, email, role: 'user' }));
+            
+            alert("Registration successful! Welcome to Wanderlust.");
+            window.location.href = "index.html";
+        }
+
+        function simulateLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('log-email').value;
+            const password = document.getElementById('log-password').value;
+
+            // Check for hardcoded admin
+            if(email === 'admin@admin.com' && password === 'admin123') {
+                localStorage.setItem('currentUser', JSON.stringify({ name: 'System Admin', email, role: 'admin' }));
+                alert("Admin Login successful!");
+                window.location.href = "admin_dashboard.html";
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('mockUsers')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if(user) {
+                localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email, role: user.role }));
+                
+                // Redirect logic based on role
+                if (user.role === 'admin') {
+                    alert("Admin User Detected! Redirecting to Admin Dashboard.");
+                    window.location.href = "admin_dashboard.html";
+                } else {
+                    alert("User Login successful! Redirecting to Home Page.");
+                    window.location.href = "index.html";
+                }
+            } else {
+                alert("Invalid email or password. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>

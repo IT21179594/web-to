@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background: var(--bg-light);">
+
+    <nav class="navbar" style="background-color: var(--primary-color); position: sticky;">
+        <div class="container nav-container" style="padding: 15px 0;">
+            <a href="admin_dashboard.html" class="logo" style="color: var(--white);">
+                <i class="fa-solid fa-plane-departure" style="color: var(--secondary-color);"></i> Wander<span style="color: var(--white);">Admin</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" target="_blank" style="color: #cbd5e1;"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Site</a></li>
+                <li><a href="index.html" class="btn btn-danger btn-sm" style="padding: 8px 15px;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-layout container" style="margin-top: 30px; display: flex; gap: 30px;">
+        <div class="sidebar" style="border-radius: var(--border-radius); width: 250px; background: var(--white); box-shadow: var(--shadow); padding: 20px 0; align-self: start;">
+            <div class="sidebar-menu" style="display: flex; flex-direction: column;">
+                <a href="admin_dashboard.html" style="padding: 15px 25px; color: var(--text-dark); font-weight: 500;"><i class="fa-solid fa-gauge" style="width: 25px;"></i> Dashboard</a>
+                <a href="admin_packages.html" style="padding: 15px 25px; color: var(--text-dark); font-weight: 500;"><i class="fa-solid fa-box" style="width: 25px;"></i> Manage Packages</a>
+                <a href="admin_bookings.html" style="padding: 15px 25px; color: var(--secondary-color); font-weight: 500; background: var(--bg-light); border-left: 3px solid var(--secondary-color);"><i class="fa-solid fa-calendar-check" style="width: 25px;"></i> All Bookings</a>
+            </div>
+        </div>
+        
+        <div class="dashboard-content" style="flex: 1;">
+            <h2 style="color: var(--primary-color); margin-bottom: 30px;">Manage Bookings (Test Mode)</h2>
+            
+            <div style="background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: var(--primary-color); color: var(--white);">
+                            <th style="padding: 15px;">ID</th>
+                            <th style="padding: 15px;">User</th>
+                            <th style="padding: 15px;">Package</th>
+                            <th style="padding: 15px;">Date / Price</th>
+                            <th style="padding: 15px;">Status</th>
+                            <th style="padding: 15px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 15px;">#1042</td>
+                            <td style="padding: 15px;"><strong>John Doe</strong><br><span style="font-size: 0.8rem; color: #64748b;">john@example.com</span></td>
+                            <td style="padding: 15px;">Tropical Paradise Getaway</td>
+                            <td style="padding: 15px;">Sep 15, 2026<br><strong>$1,798.00</strong></td>
+                            <td style="padding: 15px;"><span style="background: #a7f3d0; color: #065f46; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Confirmed</span></td>
+                            <td style="padding: 15px;">
+                                <button onclick="updateStatus(this, 'Confirmed')" class="btn btn-outline" style="padding: 5px 10px; border-color: var(--success); color: var(--success); font-size: 0.8rem;"><i class="fa-solid fa-check"></i></button>
+                                <button onclick="updateStatus(this, 'Cancelled')" class="btn btn-outline" style="padding: 5px 10px; border-color: var(--danger); color: var(--danger); font-size: 0.8rem;"><i class="fa-solid fa-xmark"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;">#1043</td>
+                            <td style="padding: 15px;"><strong>Jane Smith</strong><br><span style="font-size: 0.8rem; color: #64748b;">jane@example.com</span></td>
+                            <td style="padding: 15px;">European Heritage Tour</td>
+                            <td style="padding: 15px;">Oct 12, 2026<br><strong>$1,499.00</strong></td>
+                            <td style="padding: 15px;"><span style="background: #fef08a; color: #854d0e; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Pending</span></td>
+                            <td style="padding: 15px;">
+                                <button onclick="updateStatus(this, 'Confirmed')" class="btn btn-outline" style="padding: 5px 10px; border-color: var(--success); color: var(--success); font-size: 0.8rem;"><i class="fa-solid fa-check"></i></button>
+                                <button onclick="updateStatus(this, 'Cancelled')" class="btn btn-outline" style="padding: 5px 10px; border-color: var(--danger); color: var(--danger); font-size: 0.8rem;"><i class="fa-solid fa-xmark"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(btn, status) {
+            const row = btn.closest('tr');
+            const statusCell = row.querySelector('td:nth-child(5)');
+            
+            if (status === 'Confirmed') {
+                statusCell.innerHTML = `<span style="background: #a7f3d0; color: #065f46; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Confirmed</span>`;
+                alert("Booking confirmed successfully!");
+            } else if (status === 'Cancelled') {
+                statusCell.innerHTML = `<span style="background: #fecaca; color: #991b1b; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Cancelled</span>`;
+                alert("Booking cancelled.");
+            }
+        }
+    </script>
+</body>
+</html>

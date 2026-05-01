@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Package - Wanderlust</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background: var(--bg-light); padding-top: 50px;">
+
+    <div class="container" style="max-width: 600px; margin: 0 auto;">
+        <div style="background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); text-align: center;">
+            <i class="fa-solid fa-plane-circle-check" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+            <h2 style="color: var(--primary-color); margin-bottom: 20px;">Booking Simulation (Test Mode)</h2>
+            <p style="color: #64748b; margin-bottom: 30px;">This is the local testing version of the booking page. In the real PHP version, you would select your travel date, enter the number of people, and check out.</p>
+            
+            <button onclick="simulateBooking()" class="btn btn-primary" style="width: 100%; padding: 15px;">Simulate Successful Booking</button>
+            <a href="index.html" class="btn btn-outline" style="width: 100%; padding: 15px; margin-top: 15px; border-color: var(--secondary-color); color: var(--secondary-color);">Return Home</a>
+            
+            <div id="success-msg" style="display: none; margin-top: 20px; padding: 15px; background: #d1fae5; color: #065f46; border-radius: 8px;">
+                ✅ Booking Confirmed Successfully!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function simulateBooking() {
+            document.getElementById('success-msg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

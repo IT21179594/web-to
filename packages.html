@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Destinations - Wanderlust</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" style="color: var(--primary-color);">
+                <i class="fa-solid fa-plane-departure"></i> Wander<span style="color: var(--secondary-color);">lust</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" style="color: var(--primary-color);">Home</a></li>
+                <li><a href="packages.html" style="color: var(--secondary-color);">Destinations</a></li>
+                <li><a href="login.html" class="btn btn-outline" style="border-color: var(--secondary-color); color: var(--secondary-color);">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero" style="height: 40vh; background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80');">
+        <div class="hero-content" style="transform: translateY(0); opacity: 1;">
+            <h1 style="font-size: 3rem;">Explore All Destinations</h1>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="grid-3">
+            <div class="card animate-show">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80" alt="Maldives" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Tropical Paradise Getaway</h3>
+                    <div class="card-info">
+                        <span><i class="fa-solid fa-location-dot"></i> Maldives</span>
+                        <span><i class="fa-regular fa-clock"></i> 5 Days</span>
+                    </div>
+                    <div class="card-price">$899.00</div>
+                    <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                </div>
+            </div>
+            
+            <div class="card animate-show">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80" alt="Nepal" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Himalayan Adventure</h3>
+                    <div class="card-info">
+                        <span><i class="fa-solid fa-location-dot"></i> Nepal</span>
+                        <span><i class="fa-regular fa-clock"></i> 7 Days</span>
+                    </div>
+                    <div class="card-price">$650.00</div>
+                    <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.querySelector('.grid-3');
+            let pkgs = JSON.parse(localStorage.getItem('mockPackages')) || [];
+            pkgs.forEach(pkg => {
+                const div = document.createElement('div');
+                div.className = 'card animate-show';
+                div.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${pkg.image}" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${pkg.title}</h3>
+                        <div class="card-info">
+                            <span><i class="fa-solid fa-location-dot"></i> ${pkg.location}</span>
+                            <span><i class="fa-regular fa-clock"></i> Custom</span>
+                        </div>
+                        <div class="card-price">$${parseFloat(pkg.price).toFixed(2)}</div>
+                        <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        });
+    </script>
+</body>
+</html>

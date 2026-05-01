@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust - Premium Travel Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Dynamic Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-plane-departure"></i> Wander<span>lust</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="packages.html">Destinations</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html" class="btn btn-outline" id="nav-login-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Next Great Adventure</h1>
+            <p>Experience breathtaking destinations, premium accommodations, and unforgettable memories with our curated travel packages.</p>
+            <a href="packages.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 18px 40px;">Start Exploring</a>
+        </div>
+    </div>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="section container">
+        <h2 class="section-title animate-on-scroll">Featured Destinations</h2>
+        <div class="grid-3">
+            <div class="card animate-on-scroll" style="transition-delay: 0.1s;">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80" alt="Maldives" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Tropical Paradise Getaway</h3>
+                    <div class="card-info">
+                        <span><i class="fa-solid fa-location-dot"></i> Maldives</span>
+                        <span><i class="fa-regular fa-clock"></i> 5 Days</span>
+                    </div>
+                    <div class="card-price">$899.00</div>
+                    <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                </div>
+            </div>
+
+            <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&q=80" alt="Paris" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">European Heritage Tour</h3>
+                    <div class="card-info">
+                        <span><i class="fa-solid fa-location-dot"></i> France & Italy</span>
+                        <span><i class="fa-regular fa-clock"></i> 10 Days</span>
+                    </div>
+                    <div class="card-price">$1,499.00</div>
+                    <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NEW: More Destinations Button -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="packages.html" class="btn btn-primary animate-on-scroll" style="font-size: 1.1rem; padding: 15px 30px;">More Destinations <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="section" style="background-color: var(--white);">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title animate-on-scroll">Why Travel With Us?</h2>
+            <div class="grid-3">
+                <div class="animate-on-scroll" style="transition-delay: 0.1s; padding: 30px;">
+                    <div style="width: 80px; height: 80px; background: rgba(2, 132, 199, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fa-solid fa-earth-americas" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                    </div>
+                    <h3 style="margin-bottom: 15px; color: var(--primary-color);">Worldwide Coverage</h3>
+                    <p style="color: #64748b;">Access to exclusive tours and premium accommodations in over 100 countries across the globe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.querySelector('.grid-3');
+            let pkgs = JSON.parse(localStorage.getItem('mockPackages')) || [];
+            pkgs.forEach(pkg => {
+                const div = document.createElement('div');
+                div.className = 'card animate-show';
+                div.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${pkg.image}" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${pkg.title}</h3>
+                        <div class="card-info">
+                            <span><i class="fa-solid fa-location-dot"></i> ${pkg.location}</span>
+                            <span><i class="fa-regular fa-clock"></i> Custom</span>
+                        </div>
+                        <div class="card-price">$${parseFloat(pkg.price).toFixed(2)}</div>
+                        <a href="package_details.html" class="btn btn-outline" style="width: 100%; border-color: var(--secondary-color); color: var(--secondary-color); text-align: center;">View Details</a>
+                    </div>
+                `;
+                // Insert before the "More Destinations" button container
+                grid.parentNode.insertBefore(div, grid.nextElementSibling);
+            });
+        });
+    </script>
+</body>
+</html>

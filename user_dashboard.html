@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Wanderlust</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background: var(--bg-light);">
+
+    <nav class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" style="color: var(--primary-color);">
+                <i class="fa-solid fa-plane-departure" style="color: var(--secondary-color);"></i> Wander<span style="color: var(--secondary-color);">lust</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="packages.html">Destinations</a></li>
+                <li><a href="#" onclick="logout()" class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container section" style="margin-top: 50px;">
+        <h2 style="color: var(--primary-color); margin-bottom: 30px;">My Travel Bookings</h2>
+        
+        <div style="background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); text-align: center;" id="no-bookings">
+            <i class="fa-solid fa-suitcase-rolling" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 20px;"></i>
+            <h3>No Bookings Found</h3>
+            <p style="color: #64748b; margin-bottom: 25px;">You haven't booked any adventures yet. Start exploring our premium packages!</p>
+            <a href="packages.html" class="btn btn-primary">Explore Packages</a>
+        </div>
+
+        <div style="display: none; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden;" id="bookings-table">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: var(--white);">
+                        <th style="padding: 15px;">Package</th>
+                        <th style="padding: 15px;">Date</th>
+                        <th style="padding: 15px;">Persons</th>
+                        <th style="padding: 15px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="user-bookings-list">
+                    <!-- Bookings will appear here if simulated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
